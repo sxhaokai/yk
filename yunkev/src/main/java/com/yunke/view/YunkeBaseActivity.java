@@ -67,7 +67,7 @@ public abstract class YunkeBaseActivity extends AppCompatActivity {
      * onResume的时候不要检查CallResultActivity存不存在
      * @return
      */
-    protected boolean dontCheckoutCallResultActivity() {
+    public boolean dontCheckoutCallResultActivity() {
         return false;
     }
 

@@ -9,24 +9,24 @@ import android.provider.Settings;
  */
 
 public abstract class ActivityLifestyle {
-    public void onCreateBefore(Activity activity, Bundle savedInstanceState) {
+    public void onCreateBefore(YunkeBaseActivity activity, Bundle savedInstanceState) {
     }
 
-    public void onResumeBefore(Activity activity) {
+    public void onResumeBefore(YunkeBaseActivity activity) {
     }
 
-    public void onResumeAfter(Activity activity) {
+    public void onResumeAfter(YunkeBaseActivity activity) {
     }
 
-    public void onStartAfter(Activity activity) {
+    public void onStartAfter(YunkeBaseActivity activity) {
     }
 
-    public void onPauseBefore(Activity activity) {
+    public void onPauseBefore(YunkeBaseActivity activity) {
     }
 
-    public void onPauseAfter(Activity activity) {
+    public void onPauseAfter(YunkeBaseActivity activity) {
     }
 
-    public void onDestroyBefore(Activity activity) {
+    public void onDestroyBefore(YunkeBaseActivity activity) {
     }
 }
