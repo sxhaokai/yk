@@ -2,6 +2,7 @@
 <resources>
     <item name="status_bar_title_bar" type="id" />
     <item name="swipe" type="id" />
+    <item name="title_bar_back" type="id" />
 
     <item name="id1" type="id" />
     <item name="id2" type="id" />

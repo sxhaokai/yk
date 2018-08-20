@@ -1,8 +1,6 @@
 package com.yunke.view;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +11,6 @@ import com.yunke.R;
 import com.yunke.entity.YunkeEntity;
 import com.yunke.entity.YunkeListEntity;
 import com.yunke.net.CB2;
-import com.yunke.net.CallBack;
 import com.yunke.wrapper.LoadMoreWrapper;
 
 import retrofit2.Call;
@@ -31,7 +28,7 @@ import retrofit2.Call;
 public abstract class RefreshAndLoadMoreRecyclerViewActivity<T extends YunkeListEntity<E>, E extends YunkeEntity, F extends YunkeCard> extends YunkeBaseActivity implements TitlebarListener, SwipeRefreshLayout.OnRefreshListener, TitlebarUI.TitleBarClickListner {
 
     protected RecyclerView mRv;
-//    protected TitlebarUI mTitleBar;
+    protected TitlebarUI mTitleBar;
     private LoadMoreWrapper mLoadMoreWrapper;
     private BaseRecyclerAdapter<E, F> mAdapter;
     private LinearLayoutManager layoutManager;
@@ -41,11 +38,6 @@ public abstract class RefreshAndLoadMoreRecyclerViewActivity<T extends YunkeList
     @Override
     protected int setContentId() {
         return R.layout.activity_refresh_loadmore;
-    }
-
-    @Override
-    protected void initListner() {
-        srl.setOnRefreshListener(this);
     }
 
     private int start = 1;
@@ -95,9 +87,9 @@ public abstract class RefreshAndLoadMoreRecyclerViewActivity<T extends YunkeList
 
     @Override
     protected void initView() {
-        super.initView();
             mRv = (RecyclerView) findViewById(R.id.rv);
             srl = (SwipeRefreshLayout) findViewById(R.id.srl);
+            srl.setOnRefreshListener(this);
 //        mTitleBar = (TitlebarUI) findViewById(R.id.status_bar_title_bar);
 //        mTitleBar.setListener(this);
 //        mTitleBar.setTitle(provideTitle());
@@ -250,7 +242,7 @@ public abstract class RefreshAndLoadMoreRecyclerViewActivity<T extends YunkeList
     public abstract boolean needLoadMore();
 
     @Override
-    public void onClick(View v) {
-
+    public void onBackRequst(View v) {
+        finish();
     }
 }
