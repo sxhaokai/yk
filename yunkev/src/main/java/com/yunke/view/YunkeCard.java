@@ -26,15 +26,19 @@ public abstract class YunkeCard<T extends YunkeEntity> extends RecyclerView.View
     public YunkeCard(View itemView , Activity context) {
         super(itemView);
         this.mContext = context;
+        itemView.setOnClickListener(this);
     }
 
     public YunkeCard(int resId, ViewGroup parent, Activity context) {
         super(mInflater.inflate(resId ,parent ,false));
         this.mContext = context;
+        itemView.setOnClickListener(this);
     }
 
 
-    public abstract void bind(T t);
+    protected void bind(T t) {
+        this.mEntity = t;
+    }
 
     public T getEntity(){
         return mEntity;
