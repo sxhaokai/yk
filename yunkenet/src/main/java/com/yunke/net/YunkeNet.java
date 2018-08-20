@@ -1,6 +1,7 @@
 package com.yunke.net;
 
 import android.app.Application;
+import android.content.Context;
 
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -13,7 +14,7 @@ import okhttp3.Interceptor;
 
 public class YunkeNet {
 
-    private Supplier<Application> mContextSupplier;
+    private Context mContext;
     private static final YunkeNet ourInstance = new YunkeNet();
     private String mHost;
     private Interceptor mInterceptor;
@@ -26,16 +27,16 @@ public class YunkeNet {
     private YunkeNet() {
     }
 
-    public void init(Supplier<Application> contextSupplier ,String host ,Interceptor interceptor ,CallBackHandler handler) {
-        mContextSupplier = contextSupplier;
+    public void init(Context context,String host ,Interceptor interceptor ,CallBackHandler handler) {
+        mContext = context;
         mHost = host;
         mInterceptor = interceptor;
         mCallBackHandler = handler;
     }
 
-    public Application getContext() {
-        Objects.requireNonNull(mContextSupplier);
-        return mContextSupplier.get();
+    public Context getContext() {
+        Objects.requireNonNull(mContext);
+        return mContext;
     }
 
     public CallBackHandler getmCallBackHandler() {

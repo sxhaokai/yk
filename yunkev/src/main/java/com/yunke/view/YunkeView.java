@@ -1,6 +1,7 @@
 package com.yunke.view;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.yunke.net.YunkeNet;
 
@@ -25,7 +26,7 @@ public class YunkeView {
     }
 
 
-    public Application getContext() {
+    public Context getContext() {
         Objects.requireNonNull(YunkeNet.getInstance().getContext());
         return YunkeNet.getInstance().getContext();
     }
