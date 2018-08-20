@@ -10,5 +10,5 @@ import retrofit2.Response;
  */
 
 public interface CallBackHandler<T extends YunkeStatusEntity> {
-    void  onHandle(Call<T> call, Response<T> response ,CallBack<T> callBack);
+    void  onHandle(Call<T> call, Response<T> response, CallBack<T> callBack);
 }

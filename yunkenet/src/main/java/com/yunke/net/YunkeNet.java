@@ -1,10 +1,8 @@
 package com.yunke.net;
 
-import android.app.Application;
 import android.content.Context;
 
 import java.util.Objects;
-import java.util.function.Supplier;
 
 import okhttp3.Interceptor;
 

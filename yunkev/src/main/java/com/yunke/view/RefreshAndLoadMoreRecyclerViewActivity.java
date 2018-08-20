@@ -1,6 +1,6 @@
 package com.yunke.view;
 
-import android.content.Context;
+import android.app.Activity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,9 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yunke.R;
+import com.yunke.entity.YunkeDataEntity;
 import com.yunke.entity.YunkeEntity;
 import com.yunke.entity.YunkeListEntity;
-import com.yunke.net.CB2;
+import com.yunke.net.CB;
 import com.yunke.wrapper.LoadMoreWrapper;
 
 import retrofit2.Call;
@@ -25,7 +26,7 @@ import retrofit2.Call;
  * Created by hao.kai on 2017/5/26.
  */
 
-public abstract class RefreshAndLoadMoreRecyclerViewActivity<T extends YunkeListEntity<E>, E extends YunkeEntity, F extends YunkeCard> extends YunkeBaseActivity implements TitlebarListener, SwipeRefreshLayout.OnRefreshListener, TitlebarUI.TitleBarClickListner {
+public abstract class RefreshAndLoadMoreRecyclerViewActivity<T extends YunkeDataEntity<YunkeListEntity<E>>, E extends YunkeEntity, F extends YunkeCard> extends YunkeBaseActivity implements TitlebarListener, SwipeRefreshLayout.OnRefreshListener, TitlebarUI.TitleBarClickListner {
 
     protected RecyclerView mRv;
     protected TitlebarUI mTitleBar;
@@ -44,20 +45,20 @@ public abstract class RefreshAndLoadMoreRecyclerViewActivity<T extends YunkeList
     private int num = 10;
     private boolean mEnable = true;
 
-    protected abstract void requestNet(int start, int count, CB2<T> callBack);
+    protected abstract void requestNet(int start, int count, CB<T> callBack);
 
     protected void loadData() {
         if (!mEnable) {
             return;
         }
         mEnable = false;
-        requestNet(start, num, new CB2<T>() {
+        requestNet(start, num, new CB<T>() {
             @Override
             public void onSuccess(T body) {
-                if (null != body.getDataDataList()) {
-                    mAdapter.addData(body.getDataDataList());
-                    mLoadMoreWrapper.notifyAddData(body.getDataDataList().size());
-                    if (body.getDataDataList().size() > 0) {
+                if (null != body.getData().getDataDataList()) {
+                    mAdapter.addData(body.getData().getDataDataList());
+                    mLoadMoreWrapper.notifyAddData(body.getData().getDataDataList().size());
+                    if (body.getData().getDataDataList().size() > 0) {
 
                         start++;
                     }
@@ -87,38 +88,38 @@ public abstract class RefreshAndLoadMoreRecyclerViewActivity<T extends YunkeList
 
     @Override
     protected void initView() {
-            mRv = (RecyclerView) findViewById(R.id.rv);
-            srl = (SwipeRefreshLayout) findViewById(R.id.srl);
-            srl.setOnRefreshListener(this);
-//        mTitleBar = (TitlebarUI) findViewById(R.id.status_bar_title_bar);
-//        mTitleBar.setListener(this);
-//        mTitleBar.setTitle(provideTitle());
+        mRv = (RecyclerView) findViewById(R.id.rv);
+        srl = (SwipeRefreshLayout) findViewById(R.id.srl);
+        srl.setOnRefreshListener(this);
+        mTitleBar = (TitlebarUI) findViewById(R.id.title_bar);
+        mTitleBar.bindActivity(this);
+        mTitleBar.provideTitle(provideTitle());
 
-            layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-            mRv.setLayoutManager(layoutManager);
-            mAdapter = new BaseRecyclerAdapter<E, F>(this) {
-                @Override
-                protected F provideCard(ViewGroup parent, int viewType) {
-                    return createCard(parent, viewType, RefreshAndLoadMoreRecyclerViewActivity.this);
-                }
-            };
-
-            mLoadMoreWrapper = new LoadMoreWrapper(mAdapter, this);
-            mLoadMoreWrapper.setNeedFooter(needFooter());
-            mLoadMoreWrapper.setOnLoadMoreListener(new LoadMoreWrapper.OnLoadMoreListener() {
-                @Override
-                public void onLoadMoreRequested() {
-                    more();
-                }
-            });
-            mRv.setAdapter(mLoadMoreWrapper);
-            if (needDecration()) {
-                mRv.addItemDecoration(provideDecoration());
+        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mRv.setLayoutManager(layoutManager);
+        mAdapter = new BaseRecyclerAdapter<E, F>(this) {
+            @Override
+            protected F provideCard(ViewGroup parent, int viewType) {
+                return createCard(parent, viewType, RefreshAndLoadMoreRecyclerViewActivity.this);
             }
+        };
 
-            startPage = 1;
-            setStart();
-            addInitView();
+        mLoadMoreWrapper = new LoadMoreWrapper(mAdapter, this);
+        mLoadMoreWrapper.setNeedFooter(needFooter());
+        mLoadMoreWrapper.setOnLoadMoreListener(new LoadMoreWrapper.OnLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                more();
+            }
+        });
+        mRv.setAdapter(mLoadMoreWrapper);
+        if (needDecration()) {
+            mRv.addItemDecoration(provideDecoration());
+        }
+
+        startPage = 1;
+        setStart();
+        addInitView();
 
     }
 
@@ -158,7 +159,7 @@ public abstract class RefreshAndLoadMoreRecyclerViewActivity<T extends YunkeList
 
     protected abstract String provideTitle();
 
-    protected abstract F createCard(ViewGroup parent, int viewType, Context c);
+    protected abstract F createCard(ViewGroup parent, int viewType, Activity activity);
 
 
     private void more() {
@@ -200,13 +201,13 @@ public abstract class RefreshAndLoadMoreRecyclerViewActivity<T extends YunkeList
         start = startPage;
         mEnable = false;
         srl.setRefreshing(true);
-        requestNet(start, num, new CB2<T>() {
+        requestNet(start, num, new CB<T>() {
             @Override
             public void onSuccess(T body) {
-                if (null != body.getDataDataList()) {
-                    mAdapter.setData(body.getDataDataList());
+                if (null != body.getData().getDataDataList()) {
+                    mAdapter.setData(body.getData().getDataDataList());
                     mLoadMoreWrapper.notifyRefresh();
-                    if (body.getDataDataList().size() > 0) {
+                    if (body.getData().getDataDataList().size() > 0) {
 
                         start++;
                     }
@@ -239,7 +240,9 @@ public abstract class RefreshAndLoadMoreRecyclerViewActivity<T extends YunkeList
         refresh();
     }
 
-    public abstract boolean needLoadMore();
+    public boolean needLoadMore() {
+        return true;
+    }
 
     @Override
     public void onBackRequst(View v) {

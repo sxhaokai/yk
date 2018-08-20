@@ -1,5 +1,6 @@
 package com.yunke.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,18 +17,18 @@ import com.yunke.entity.YunkeEntity;
 public abstract class YunkeCard<T extends YunkeEntity> extends RecyclerView.ViewHolder implements View.OnClickListener{
     protected static LayoutInflater mInflater = LayoutInflater.from(YunkeView.getInstance().getContext());
     protected T mEntity;
-    protected Context mContext;
+    protected Activity mContext;
 
     public YunkeCard(ViewGroup parent , Context context) {
         super(null);
     }
 
-    public YunkeCard(View itemView , Context context) {
+    public YunkeCard(View itemView , Activity context) {
         super(itemView);
         this.mContext = context;
     }
 
-    public YunkeCard(int resId, ViewGroup parent, Context context) {
+    public YunkeCard(int resId, ViewGroup parent, Activity context) {
         super(mInflater.inflate(resId ,parent ,false));
         this.mContext = context;
     }

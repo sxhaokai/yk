@@ -1,8 +1,6 @@
 package com.yunke.view;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.provider.Settings;
 
 /**
  * Created by haokai on 2018/8/20.
