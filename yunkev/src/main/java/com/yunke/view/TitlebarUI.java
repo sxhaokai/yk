@@ -81,7 +81,7 @@ public class TitlebarUI extends FrameLayout implements OnClickListener {
         }
     }
 
-    interface TitleBarClickListner {
+    public interface TitleBarClickListner {
         void onBackRequst(View v);
         void onTitleRightTextClick(View v);
     }
