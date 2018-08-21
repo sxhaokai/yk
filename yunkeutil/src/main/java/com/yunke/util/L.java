@@ -15,15 +15,18 @@ public class L {
     private static String className;//类名
     private static String methodName;//方法名
     private static int lineNumber;//行数
-    private static boolean isDebug = true;//是否是debug模式
+    private static boolean isDebug = false;//是否是debug模式
 
     private L() {
 
     }
+    public static void setDebug(boolean b) {
+        isDebug = b;
+    }
 
-    public static boolean isDebuggable() {
-            return BuildConfig.DEBUG;
-//        return isDebug;
+    private static boolean isDebuggable() {
+//            return BuildConfig.DEBUG;
+        return isDebug;
     }
 
     private static String createLog(String log) {

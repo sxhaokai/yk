@@ -2,6 +2,8 @@ package com.yunke.net;
 
 import android.content.Context;
 
+import com.yunke.util.L;
+
 import java.util.Objects;
 
 import okhttp3.Interceptor;
@@ -30,6 +32,10 @@ public class YunkeNet {
         mHost = host;
         mInterceptor = interceptor;
         mCallBackHandler = handler;
+    }
+
+    public void setDebug(boolean b) {
+        L.setDebug(b);
     }
 
     public Context getContext() {
