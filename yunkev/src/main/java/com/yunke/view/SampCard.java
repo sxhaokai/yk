@@ -1,6 +1,7 @@
 package com.yunke.view;
 
 import android.app.Activity;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.yunke.R;
@@ -18,7 +19,12 @@ public class SampCard extends YunkeCard<YunkeEntity> {
     }
 
     @Override
-    public void bind(YunkeEntity yunkeEntity) {
+    protected void onItemClick(View v, YunkeEntity mEntity) {
+
+    }
+
+    @Override
+    protected void bindData(YunkeEntity yunkeEntity) {
 
     }
 }
