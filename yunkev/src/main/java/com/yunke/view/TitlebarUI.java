@@ -45,6 +45,7 @@ public class TitlebarUI extends FrameLayout implements OnClickListener {
         tvRight = (TextView) findViewById(R.id.tv_right);
 
         findViewById(R.id.iv_left).setOnClickListener(this);
+        findViewById(R.id.tv_right).setOnClickListener(this);
     }
 
     public void setListener(TitleBarClickListner listener) {
