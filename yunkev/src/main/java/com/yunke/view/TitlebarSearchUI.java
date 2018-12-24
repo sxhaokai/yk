@@ -44,7 +44,6 @@ public class TitlebarSearchUI extends FrameLayout implements OnClickListener ,Ti
         etSearch = findViewById(R.id.et_search);
         findViewById(R.id.iv_left).setOnClickListener(this);
         findViewById(R.id.tv_search).setOnClickListener(this);
-        findViewById(R.id.rl_right_iv_container).setOnClickListener(this);
     }
 
     @Override
