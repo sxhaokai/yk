@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.yunke.R;
 import com.yunke.entity.YunkeDataEntity;
@@ -29,7 +30,7 @@ import retrofit2.Call;
 public abstract class RefreshAndLoadMoreRecyclerViewActivity<T extends YunkeDataEntity<YunkeListEntity<E>>, E extends YunkeEntity, F extends YunkeCard> extends YunkeBaseActivity implements TitlebarListener, SwipeRefreshLayout.OnRefreshListener, TitlebarUI.TitleBarClickListner {
 
     protected RecyclerView mRv;
-    protected TitlebarUI mTitleBar;
+    protected TitleBarInterface mTitleBar;
     private LoadMoreWrapper mLoadMoreWrapper;
     private BaseRecyclerAdapter<E, F> mAdapter;
     private LinearLayoutManager layoutManager;
@@ -46,6 +47,9 @@ public abstract class RefreshAndLoadMoreRecyclerViewActivity<T extends YunkeData
     private boolean mEnable = true;
 
     protected abstract void requestNet(int start, int count, CB<T> callBack);
+    protected TitleBarInterface provideTItleView(){
+        return null;
+    }
 
     protected void loadData() {
         if (!mEnable) {
@@ -91,9 +95,16 @@ public abstract class RefreshAndLoadMoreRecyclerViewActivity<T extends YunkeData
         mRv = (RecyclerView) findViewById(R.id.rv);
         srl = (SwipeRefreshLayout) findViewById(R.id.srl);
         srl.setOnRefreshListener(this);
-        mTitleBar = (TitlebarUI) findViewById(R.id.title_bar);
+        TitleBarInterface titleBarInterface = provideTItleView();
+        if (titleBarInterface != null) {
+            this.mTitleBar = titleBarInterface;
+        } else {
+            this.mTitleBar = new TitlebarUI(this);
+        }
+        ((FrameLayout)findViewById(R.id.rl_title_container)).addView(mTitleBar.selfView());
         mTitleBar.bindActivity(this);
-        mTitleBar.provideTitle(provideTitle());
+        mTitleBar.setTitle(provideTitle());
+
 
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRv.setLayoutManager(layoutManager);
@@ -241,11 +252,7 @@ public abstract class RefreshAndLoadMoreRecyclerViewActivity<T extends YunkeData
     }
 
     public boolean needLoadMore() {
-        return true;
-    }
 
-    @Override
-    public void onBackRequst(View v) {
-        finish();
+        return true;
     }
 }
