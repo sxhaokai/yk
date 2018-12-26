@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import com.yunke.R;
 import com.yunke.entity.YunkeDataEntity;
@@ -36,6 +37,7 @@ public abstract class RefreshAndLoadMoreRecyclerViewActivity<T extends YunkeData
     private LinearLayoutManager layoutManager;
     protected SwipeRefreshLayout srl;
     protected int startPage;
+    private RelativeLayout mRlEmptyContainer;
 
     @Override
     protected int setContentId() {
@@ -47,7 +49,8 @@ public abstract class RefreshAndLoadMoreRecyclerViewActivity<T extends YunkeData
     private boolean mEnable = true;
 
     protected abstract void requestNet(int start, int count, CB<T> callBack);
-    protected TitleBarInterface provideTItleView(){
+
+    protected TitleBarInterface provideTItleView() {
         return null;
     }
 
@@ -94,6 +97,7 @@ public abstract class RefreshAndLoadMoreRecyclerViewActivity<T extends YunkeData
     protected void initView() {
         mRv = (RecyclerView) findViewById(R.id.rv);
         srl = (SwipeRefreshLayout) findViewById(R.id.srl);
+        mRlEmptyContainer = (RelativeLayout) findViewById(R.id.rl_empty_container);
         srl.setOnRefreshListener(this);
         TitleBarInterface titleBarInterface = provideTItleView();
         if (titleBarInterface != null) {
@@ -101,7 +105,7 @@ public abstract class RefreshAndLoadMoreRecyclerViewActivity<T extends YunkeData
         } else {
             this.mTitleBar = new TitlebarUI(this);
         }
-        ((FrameLayout)findViewById(R.id.rl_title_container)).addView(mTitleBar.selfView());
+        ((FrameLayout) findViewById(R.id.rl_title_container)).addView(mTitleBar.selfView());
         mTitleBar.bindActivity(this);
         mTitleBar.setTitle(provideTitle());
 
@@ -222,6 +226,7 @@ public abstract class RefreshAndLoadMoreRecyclerViewActivity<T extends YunkeData
 
                         start++;
                     }
+                    showEmptyView(body.getData().getDataDataList().size() == 0);
                 }
                 mEnable = true;
                 srl.setRefreshing(false);
@@ -244,6 +249,29 @@ public abstract class RefreshAndLoadMoreRecyclerViewActivity<T extends YunkeData
             }
         });
 
+    }
+
+    /**
+     * 显示数据未空的情况
+     *
+     * @param b
+     */
+    private void showEmptyView(boolean b) {
+        if (b) {
+            if (provideEmptyDataView() != null && mRlEmptyContainer.getChildCount() == 0) {
+
+                mRlEmptyContainer.addView(provideEmptyDataView());
+            }
+        } else {
+            if (mRlEmptyContainer.getChildCount() > 0) {
+                mRlEmptyContainer.removeAllViews();
+            }
+        }
+
+    }
+
+    protected View provideEmptyDataView() {
+        return null;
     }
 
     @Override

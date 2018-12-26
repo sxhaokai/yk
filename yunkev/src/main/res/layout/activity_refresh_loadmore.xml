@@ -10,18 +10,29 @@
     <FrameLayout
         android:id="@+id/rl_title_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </FrameLayout>
+        android:layout_height="wrap_content"></FrameLayout>
 
     <com.yunke.view.PTRefresh
         android:id="@+id/srl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/rl_empty_container"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="match_parent"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </FrameLayout>
+
 
     </com.yunke.view.PTRefresh>
 
