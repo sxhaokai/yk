@@ -103,6 +103,10 @@ public class TitlebarUI extends FrameLayout implements OnClickListener ,TitleBar
         }
     }
 
+    public void setLeftInvisible() {
+        findViewById(R.id.iv_left).setVisibility(GONE);
+    }
+
     public interface TitleBarClickListner {
         void onTitleLeftClick(View v);
         void onTitleRightClick(View v);

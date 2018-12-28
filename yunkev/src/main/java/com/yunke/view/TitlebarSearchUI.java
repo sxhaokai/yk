@@ -65,6 +65,10 @@ public class TitlebarSearchUI extends FrameLayout implements OnClickListener ,Ti
         return this;
     }
 
+    public void setLeftInvisible() {
+        findViewById(R.id.iv_left).setVisibility(GONE);
+    }
+
     public void setSearchListener(OnSearchListener listener) {
         this.mSearchListener = listener;
     }
