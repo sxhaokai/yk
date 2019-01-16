@@ -46,13 +46,13 @@ public class TitlebarSearchUI extends FrameLayout implements OnClickListener ,Ti
         findViewById(R.id.tv_search).setOnClickListener(this);
     }
 
-    @Override
-    public void setTitle(String title) {
-
-    }
-
     public void bindActivity(Activity activity) {
         this.mActivity = activity;
+    }
+
+    @Override
+    public void setTitle(Activity activity, String title) {
+
     }
 
     @Override

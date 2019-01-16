@@ -106,8 +106,7 @@ public abstract class RefreshAndLoadMoreRecyclerViewActivity<T extends YunkeData
             this.mTitleBar = new TitlebarUI(this);
         }
         ((FrameLayout) findViewById(R.id.rl_title_container)).addView(mTitleBar.selfView());
-        mTitleBar.bindActivity(this);
-        mTitleBar.setTitle(provideTitle());
+        mTitleBar.setTitle(this ,provideTitle());
 
 
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
