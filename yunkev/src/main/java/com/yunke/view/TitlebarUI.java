@@ -51,6 +51,7 @@ public class TitlebarUI extends FrameLayout implements OnClickListener ,TitleBar
         rl_right_iv_container = (RelativeLayout) findViewById(R.id.rl_right_iv_container);
 
         findViewById(R.id.iv_left).setOnClickListener(this);
+        findViewById(R.id.rl_left).setOnClickListener(this);
         findViewById(R.id.tv_right).setOnClickListener(this);
         findViewById(R.id.rl_right_iv_container).setOnClickListener(this);
     }
@@ -68,11 +69,8 @@ public class TitlebarUI extends FrameLayout implements OnClickListener ,TitleBar
 
 
     @Override
-    public void setTitle(String title) {
+    public void setTitle(Activity activity ,String title) {
         tvTitle.setText(title);
-    }
-
-    public void bindActivity(Activity activity) {
         this.mActivity = activity;
     }
 
@@ -89,7 +87,7 @@ public class TitlebarUI extends FrameLayout implements OnClickListener ,TitleBar
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        if (i == R.id.iv_left) {
+        if (i == R.id.rl_left || i == R.id.iv_left) {
             if (null != mActivity) {
                 mActivity.finish();
             }
@@ -104,7 +102,7 @@ public class TitlebarUI extends FrameLayout implements OnClickListener ,TitleBar
     }
 
     public void setLeftInvisible() {
-        findViewById(R.id.iv_left).setVisibility(GONE);
+        findViewById(R.id.rl_left).setVisibility(GONE);
     }
 
     public interface TitleBarClickListner {

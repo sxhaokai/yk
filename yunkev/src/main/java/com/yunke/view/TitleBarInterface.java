@@ -8,9 +8,7 @@ import android.view.View;
  */
 
 public interface TitleBarInterface {
-    void setTitle(String title);
-
-    void bindActivity(Activity activity);
+    void setTitle(Activity activity, String title);
 
     void setTitleClickListener(TitlebarUI.TitleBarClickListner listener);
 
