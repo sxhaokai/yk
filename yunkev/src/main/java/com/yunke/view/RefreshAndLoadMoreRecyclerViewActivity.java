@@ -14,6 +14,7 @@ import com.yunke.entity.YunkeDataEntity;
 import com.yunke.entity.YunkeEntity;
 import com.yunke.entity.YunkeListEntity;
 import com.yunke.net.CB;
+import com.yunke.wrapper.HeaderAndFooterWrapper;
 import com.yunke.wrapper.LoadMoreWrapper;
 
 import retrofit2.Call;
@@ -117,8 +118,12 @@ public abstract class RefreshAndLoadMoreRecyclerViewActivity<T extends YunkeData
                 return createCard(parent, viewType, RefreshAndLoadMoreRecyclerViewActivity.this);
             }
         };
+        HeaderAndFooterWrapper<Object> objectHeaderAndFooterWrapper = new HeaderAndFooterWrapper<>(mAdapter);
+        if (null != provideHeaderView()) {
+            objectHeaderAndFooterWrapper.addHeaderView(provideHeaderView());
+        }
 
-        mLoadMoreWrapper = new LoadMoreWrapper(mAdapter, this);
+        mLoadMoreWrapper = new LoadMoreWrapper(objectHeaderAndFooterWrapper, this);
         mLoadMoreWrapper.setNeedFooter(needFooter());
         mLoadMoreWrapper.setOnLoadMoreListener(new LoadMoreWrapper.OnLoadMoreListener() {
             @Override
@@ -135,6 +140,10 @@ public abstract class RefreshAndLoadMoreRecyclerViewActivity<T extends YunkeData
         setStart();
         addInitView();
 
+    }
+
+    public View provideHeaderView(){
+        return null;
     }
 
     /**
