@@ -32,6 +32,7 @@ import retrofit2.Call;
 public abstract class RefreshAndLoadMoreRecyclerViewActivity<T extends YunkeDataEntity<YunkeListEntity<E>>, E extends YunkeEntity, F extends YunkeCard> extends YunkeBaseActivity implements TitlebarListener, SwipeRefreshLayout.OnRefreshListener, TitlebarUI.TitleBarClickListner {
 
     protected RecyclerView mRv;
+    protected RelativeLayout mContentContainer;
     protected TitleBarInterface mTitleBar;
     private LoadMoreWrapper mLoadMoreWrapper;
     private BaseRecyclerAdapter<E, F> mAdapter;
@@ -96,6 +97,7 @@ public abstract class RefreshAndLoadMoreRecyclerViewActivity<T extends YunkeData
 
     @Override
     protected void initView() {
+        mContentContainer = (RelativeLayout) findViewById(R.id.rl_content_container);
         mRv = (RecyclerView) findViewById(R.id.rv);
         srl = (SwipeRefreshLayout) findViewById(R.id.srl);
         mRlEmptyContainer = (RelativeLayout) findViewById(R.id.rl_empty_container);
