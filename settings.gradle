@@ -1,1 +1,1 @@
-include ':app', ':yunkeutil', ':yunkeentity', ':yunkev', ':yunkenet'
+include ':app',':common'

@@ -1,14 +1,17 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
+
 
 android {
     compileSdkVersion COMPILE_SDK_VERSION
+
     defaultConfig {
-        applicationId "com.yunke.sample"
         minSdkVersion MIN_SDK_VERSION
         targetSdkVersion TARGET_SDK_VERSION
         versionCode 1
         versionName "1.0"
+
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+
     }
     buildTypes {
         release {
@@ -19,6 +22,10 @@ android {
 }
 
 dependencies {
+    implementation 'com.squareup.retrofit2:retrofit:2.2.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.0.2'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.6.0'
+    implementation 'com.burgstaller:okhttp-digest:1.10'
     implementation 'androidx.appcompat:appcompat:1.1.0'
 
 }
